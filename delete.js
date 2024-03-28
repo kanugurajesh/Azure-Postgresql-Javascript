@@ -1,13 +1,12 @@
 const pg = require('pg');
+require('dotenv').config();
 
 const config = {
-    host: 'practice-server.postgres.database.azure.com',
-    // Do not hard code your username and password.
-    // Consider using Node environment variables.
-    user: 'postgres',     
-    password: 'Z;rh%ysXOC9U=MH',
-    database: 'postgres',
-    port: 5432,
+    host: process.env.HOST,
+    user: process.env.USER,     
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE,
+    port: process.env.PORT,
     ssl: true
 };
 
@@ -32,6 +31,7 @@ function queryDatabase() {
         .then(result => {
             console.log('Delete completed');
             console.log(`Rows affected: ${result.rowCount}`);
+            client.end(console.log('Closed client connection'));
         })
         .catch(err => {
             console.log(err);
